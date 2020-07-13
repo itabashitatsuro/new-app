@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Enjoy your Life, Feel Happy</h1>
+<%= image_tag "/images/positive.jpg" %>
+
+<%= link_to '新規作成', new_diary_path %>
+
+<table>
+  <head>
+    <tr>
+      <th>内容</th>
+      <th>日付</th>
+      <th>画像</th>
+    </tr>
+  </head>
+
+  <body>
+    <% @diaries.each do |diary| %>
+      <tr>
+        <td><%= diary.content %></td>
+        <td><%= diary.date %></td>
+        <td><%= diary.image %></td>
+        <td><%= link_to '詳細', diary %></td>
+        <td><%= link_to '編集', edit_diary_path(diary) %></td>
+        <td><%= link_to '削除', diary, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </body>
+</table>
+
+<br>
+
+
