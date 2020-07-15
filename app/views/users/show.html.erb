@@ -1,0 +1,16 @@
+<div class="contents row">
+  <p>[投稿一覧]</p>
+  <% @diaries.each do |diary| %>
+    <div class="Info" >
+      <div class="text">
+        <p>日付：<%= diary.date %></p>
+        <p>内容：<%= diary.content %></p>
+      </div>
+      <div class="link" style="display:flex">
+        <p style="margin:5px"><%= link_to '編集', edit_diary_path(diary) %></p>
+        <p style="margin:5px"><%= link_to '削除', diary, method: :delete, data: { confirm: '本当に削除しますか?' } %></p>
+      </div>
+    </div>
+  <% end %>
+  <%= link_to 'TOPに戻る', diaries_path %>
+</div>

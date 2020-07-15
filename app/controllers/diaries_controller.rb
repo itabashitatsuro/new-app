@@ -1,10 +1,11 @@
 class DiariesController < ApplicationController
   before_action :set_diary, only: [:show, :edit, :update, :destroy]
+  before_action :move_to_index, except: [:index, :show]
 
   # GET /diaries
   # GET /diaries.json
   def index
-    @diaries = Diary.all
+    @diaries = Diary.includes(:user)
   end
 
   # GET /diaries/1
@@ -25,10 +26,9 @@ class DiariesController < ApplicationController
   # POST /diaries.json
   def create
     @diary = Diary.new(diary_params)
-
     respond_to do |format|
       if @diary.save
-        format.html { redirect_to @diary, notice: 'Diary was successfully created.' }
+        format.html { redirect_to @diary }
         format.json { render :show, status: :created, location: @diary }
       else
         format.html { render :new }
@@ -63,12 +63,16 @@ class DiariesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_diary
-      @diary = Diary.find(params[:id])
-    end
+  def set_diary
+    @diary = Diary.find(params[:id])
+  end
 
     # Only allow a list of trusted parameters through.
-    def diary_params
-      params.require(:diary).permit(:content, :date, :image)
-    end
+  def diary_params
+    params.require(:diary).permit(:content, :date).merge(user_id: current_user.id)
+  end
+  
+  def move_to_index
+    redirect_to action: :index unless user_signed_in?
+  end
 end

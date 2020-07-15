@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>内容:</strong>
   <%= @diary.content %>
@@ -10,10 +8,6 @@
   <%= @diary.date %>
 </p>
 
-<p>
-  <strong>画像:</strong>
-  <%= @diary.image %>
-</p>
 
 <%= link_to '編集', edit_diary_path(@diary) %> |
 <%= link_to '削除', @diary, method: :delete, data: { confirm: '本当に削除しますか？'} %>
